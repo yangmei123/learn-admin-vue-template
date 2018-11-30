@@ -1,10 +1,35 @@
-# vue-admin-template
+# 学习vue-admin-template笔记
 
-> A minimal vue admin template with Element UI & axios & iconfont & permission control & lint
+> 结合使用element-ui制作后台基础模版；使用vuex来进行一些状态管理；
 
-**Live demo:** http://panjiachen.github.io/vue-admin-template
+> element-ui文档地址
 
-[中文文档](https://github.com/PanJiaChen/vue-admin-template/blob/master/README-zh.md)
+    http://element-cn.eleme.io/#/zh-CN/component/menu
+    
+> vue-admin-template 文档地址
+
+    https://panjiachen.github.io/vue-element-admin-site/zh/guide/#%E5%8A%9F%E8%83%BD
+    
+项目启动，调用main.js的入口文件，文件内通过permission.js的方法；
+> 在路由进入前，进行登录权限验证；进行重定向等操作；
+
+1. 如果没有token跳转到登录页；
+2. 如果有token通过vuex的分发dispatch去触发GetInfo的action方法获取用户信息，如果报错则token有问题，要退出重新登录，如果获取的信息都正常，通过vuex的commit调用mutations修改state的值。
+3. 进入页面后，侧边栏的收起关闭状态也使用了state进行管理。
+4. 修改loginOut方法，不去请求；
+5. 修改页面的请求接口为本地的node接口；对应的github项目地址： https://github.com/yangmei123/node-server-express
+
+页面的http请求使用axios作为项目内所有http请求的预处理，拦截器；
+
+> https://www.kancloud.cn/yunye/axios/234845
+
+> Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。
+
+> 这是一个 极简的 vue admin 管理后台 它只包含了 Element UI & axios & iconfont & permission control & lint，这些搭建后台必要的东西。
+
+[线上地址](http://panjiachen.github.io/vue-admin-template)
+
+[国内访问](https://panjiachen.gitee.io/vue-admin-template)
 
 ## Build Setup
 
@@ -14,6 +39,9 @@ git clone https://github.com/PanJiaChen/vue-admin-template.git
 
 # Install dependencies
 npm install
+
+# 建议不要用cnpm  安装有各种诡异的bug 可以通过如下操作解决npm速度慢的问题
+npm install --registry=https://registry.npm.taobao.org
 
 # Serve with hot reload at localhost:9528
 npm run dev
@@ -25,54 +53,6 @@ npm run build
 npm run build --report
 ```
 
-## Demo
-
-![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
-
-## Extra
-
-If you want router permission && generate menu by user roles , you can use this branch [permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)
-
-This project is based on `webpack4` development. If you want to use `webpack3` development, please use this branch [webpack3](https://github.com/PanJiaChen/vue-admin-template/tree/webpack3)
-
-For `typescript` version, you can use [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (Credits: [@Armour](https://github.com/Armour))
-
-## Related Project
-
-[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
-
-[electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
-
-[vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template)
-
-### Element-Ui using cdn tutorial
-
-First find `index.html`([root directory](https://github.com/PanJiaChen/vue-admin-template/blob/element-ui-cdn/index.html))
-
-Import css and js of `Element`, and then import vue. Because `Element` is vue-dependent, vue must be import before it.
-
-Then find [webpack.base.conf.js](https://github.com/PanJiaChen/vue-admin-template/blob/element-ui-cdn/build/webpack.base.conf.js)
-Add `externals` to make webpack not package vue and element.
-
-```
-externals: {
-  vue: 'Vue',
-  'element-ui':'ELEMENT'
-}
-```
-
-Finally there is a small detail to pay attention to that if you import vue in global, you don't need to manually `Vue.use(Vuex)`, it will be automatically mounted, see
-[issue](https://github.com/vuejs/vuex/issues/731)
-
-And you can use `npm run build --report` to see the effect
-
-Pictured:
-![demo](https://panjiachen.github.io/images/element-cdn.png)
-
-**[Detailed code](https://github.com/PanJiaChen/vue-admin-template/commit/746aff560932704ae821f82f10b8b2a9681d5177)**
-
-**[Branch](https://github.com/PanJiaChen/vue-admin-template/tree/element-ui-cdn)**
-
 ## Browsers support
 
 Modern browsers and Internet Explorer 10+.
@@ -81,8 +61,3 @@ Modern browsers and Internet Explorer 10+.
 | --------- | --------- | --------- | --------- |
 | IE10, IE11, Edge| last 2 versions| last 2 versions| last 2 versions
 
-## License
-
-[MIT](https://github.com/PanJiaChen/vue-admin-template/blob/master/LICENSE) license.
-
-Copyright (c) 2017-present PanJiaChen

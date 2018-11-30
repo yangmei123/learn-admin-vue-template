@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/login'
+import { login, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -62,14 +62,14 @@ const user = {
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
+        if (state.token) {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           removeToken()
           resolve()
-        }).catch(error => {
-          reject(error)
-        })
+        } else {
+          reject('token已清除')
+        }
       })
     },
 
